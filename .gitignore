@@ -56,3 +56,5 @@ docs/_build/
 
 # PyBuilder
 target/
+
+Task_01_Duplicate_Detection/\.ipynb_checkpoints/
