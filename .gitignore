@@ -58,3 +58,6 @@ docs/_build/
 target/
 
 Task_01_Duplicate_Detection/\.ipynb_checkpoints/
+Task_01_Duplicate_Detection/bow_subset.npz
+Task_01_Duplicate_Detection/reviews_subset.json
+Task_01_Duplicate_Detection/top_25k_words.npy
