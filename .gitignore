@@ -57,7 +57,13 @@ docs/_build/
 # PyBuilder
 target/
 
-Task_01_Duplicate_Detection/\.ipynb_checkpoints/
+# Jupyter Notebook
+\.ipynb_checkpoints/
+
+#Task 01 specific ignores
 Task_01_Duplicate_Detection/bow_subset.npz
 Task_01_Duplicate_Detection/reviews_subset.json
 Task_01_Duplicate_Detection/top_25k_words.npy
+
+#Task 02 specific ignores
+
