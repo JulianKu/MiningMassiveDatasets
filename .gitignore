@@ -66,4 +66,4 @@ Task_01_Duplicate_Detection/reviews_subset.json
 Task_01_Duplicate_Detection/top_25k_words.npy
 
 #Task 02 specific ignores
-
+Task_02_Rating_Prediction/ratings.npy
