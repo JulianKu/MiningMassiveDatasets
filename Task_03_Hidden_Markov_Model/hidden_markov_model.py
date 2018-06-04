@@ -466,3 +466,61 @@ plt.plot(range(len(history_loglik_5)) , history_loglik_5)
 plt.xlabel("iteration",fontsize=16)
 plt.ylabel("log-likelihood",fontsize=16)
 plt.show()
+
+
+temp_reviews = []
+temp_y = []
+for counter in range(len(reviews_test)):
+    current_review = reviews_test[counter]
+    current_y   = y_test[counter]
+    if(hmm_1.is_in_vocab(current_review) | hmm_5.is_in_vocab(current_review)):
+        temp_reviews.append(current_review)
+        temp_y.append(current_y)
+reviews_test_filtered = temp_reviews
+y_test_filtered = temp_y
+
+
+def classify_review(hmm_1,hmm_5,p,sentence_in):
+    """Given the trained models `hmm_1` and `hmm_2` and frequency of
+       1-star reviews, classifies `sentence_in` 
+    
+    Parameters
+    ----------
+    hmm_1 : HMM_TxtGenerator
+        The trained model on 1-star reviews.
+    hmm_5 : HMM_TxtGenerator
+        The trained model on 5-star reviews.
+    p: a scalar in [0,1]
+        frequency of 1-star reviews, (#1star)/(#1star + #5star)
+    
+    Returns
+    -------
+    c : int in {1,5}
+        c=1 means sentence_in is classified as 1. 
+        similarly c=5 means sentence_in is classified as 5.
+        
+    """
+    
+    ### YOUR CODE HERE ###
+    
+    
+    
+    
+    
+    
+    
+p = len(reviews_1star_train)/(len(reviews_1star_train)+len(reviews_5star_train))
+y_pred = []
+for sent in reviews_test_filtered:
+    y_pred.append(classify_review(hmm_1,hmm_5,p,sent))
+accuracy = np.sum(np.array(y_pred)==np.array(y_test_filtered))/len(y_test_filtered)
+print("classification accuracy for " + str(len(y_test_filtered)) +\
+      " test instances: " + str(accuracy))
+
+sample_1star = hmm_1.generate_sentence(15)
+sample_5star = hmm_5.generate_sentence(15)
+print("generated 1star review: ")
+print(sample_1star)
+print("\n")
+print("generated 5star review: ")
+print(sample_5star)
