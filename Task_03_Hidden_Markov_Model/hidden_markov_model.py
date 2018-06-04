@@ -533,14 +533,19 @@ def classify_review(hmm_1,hmm_5,p,sentence_in):
         
     """
     
-    ### YOUR CODE HERE ###
+    ### YOUR CODE HERE ### ==> DONE
     
+    #According to the formulas given in the notebook
+    P_hmm1 = hmm_1.loglik_sentence(sentence_in) + np.log(p)
+    P_hmm5 = hmm_5.loglik_sentence(sentence_in) + np.log(1-p)
     
+    if(P_hmm1 >= P_hmm5):
+        c = 1
+    else:
+        c = 5
+    return c
     
-    
-    
-    
-    
+
 p = len(reviews_1star_train)/(len(reviews_1star_train)+len(reviews_5star_train))
 y_pred = []
 for sent in reviews_test_filtered:
