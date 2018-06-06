@@ -243,24 +243,27 @@ class HMM_TxtGenerator:
         
         ### YOUR CODE HERE ### ==> DONE
         
-        sent = []
-        Z = np.zeros_like(self.model_params.pi) #hidden state probabilites
-        X = np.zeros((1, len(self.word_list))) #evidence probabilites
+        sent_idx = []
+        
+        #init Z for first time step
+        Z = self.model_params.pi.T
+        #compute X for first time step
+        X = np.reshape(Z.dot(self.model_params.B), len(self.word_list))
+        
         #compute next timestep by applying
-        #Z_t+1 = Z_t * A
-        #X_t = Z_t * B
         for i in range(sentence_length):
-            #for init timestep
-            if (i == 0):
-                Z = self.model_params.pi.T
-            #for all other timesteps
-            else:
-                Z = Z.dot(self.model_params.A)
+            
+            #Z_t+1 = Z_t * A
+            Z = Z.dot(self.model_params.A)
+            #X_t = Z_t * B    
             X = np.reshape(Z.dot(self.model_params.B), len(self.word_list))
+            
             #pick a random word w.r.t. the probabilities of the single words
-            sent.append(np.random.choice(np.arange(0, len(self.word_list), 1), p=X))
+            sent_idx.append(np.random.choice(np.arange(len(self.word_list)), p=X))
+        
         #convert list of integers to actual word list
-        sent = self.X_to_sentence(sent)    
+        sent = self.X_to_sentence(sent_idx)
+        
         return sent
         
     
@@ -400,7 +403,7 @@ class HMM_TxtGenerator:
         for counter in range(num_iter):
             
             print("iteration " + str(counter) +\
-                  " of " + str(num_iter) , end="\n")
+                  " of " + str(num_iter) , end="\r")
             history_loglik.append(self.loglik_corpus())
             self.update_params()
             
@@ -471,7 +474,7 @@ reviews_test = reviews_1star_test + reviews_5star_test
 y_test  = [1 for i in range(len(reviews_1star_test))] + \
           [5 for i in range(len(reviews_5star_test))]
 
-"""
+
 K = 8
 hmm_1 = HMM_TxtGenerator(reviews_1star_train,K)
 hmm_5 = HMM_TxtGenerator(reviews_5star_train,K)
@@ -491,14 +494,15 @@ plt.xlabel("iteration",fontsize=16)
 plt.ylabel("log-likelihood",fontsize=16)
 plt.show()
 
+"""
 pickle.dump(hmm_1, open("hmm1.p", "wb"))
 pickle.dump(hmm_5, open("hmm5.p", "wb"))
 
-"""
+
 #load data from file
 hmm_1 = pickle.load(open("hmm1.p", "rb"))
 hmm_5 = pickle.load(open("hmm5.p", "rb"))
-
+"""
 
 temp_reviews = []
 temp_y = []
@@ -553,6 +557,7 @@ for sent in reviews_test_filtered:
 accuracy = np.sum(np.array(y_pred)==np.array(y_test_filtered))/len(y_test_filtered)
 print("classification accuracy for " + str(len(y_test_filtered)) +\
       " test instances: " + str(accuracy))
+
 
 sample_1star = hmm_1.generate_sentence(15)
 sample_5star = hmm_5.generate_sentence(15)
