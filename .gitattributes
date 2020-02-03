@@ -1,0 +1,3 @@
+# ignore these files for language statistics
+Task_04_Page_Rank/task_04_restaurant_ranking_1.html linguist-vendored
+Task_05_Spectral_Clustering/project_05.html linguist-vendored
